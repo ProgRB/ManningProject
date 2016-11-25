@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="ManningTable.View.SubdivPartitionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:ManningTable.View"
+             xmlns:cmd="clr-namespace:ManningTable.ViewModel"
+             xmlns:emodel="clr-namespace:EntityGenerator"
+             xmlns:interact="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:hlp="clr-namespace:Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="cmd:AppManningCommands.AddSubdivPartition" CanExecute="Add_CanExecute" Executed="Add_executed"/>
+        <CommandBinding Command="cmd:AppManningCommands.EditSubdivPartition" CanExecute="Edit_CanExecute" Executed="Edit_executed"/>
+        <CommandBinding Command="cmd:AppManningCommands.DeleteSubdivPartition" CanExecute="Edit_CanExecute" Executed="Delete_executed"/>
+    </UserControl.CommandBindings>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ManningTable;component/AppResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Separator" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <HierarchicalDataTemplate DataType="{x:Type local:SubdivWithChild}" ItemsSource="{Binding SubdivPartitionChildren}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="ClSubdiv1"/>
+                        <ColumnDefinition SharedSizeGroup="ClSubdiv2"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding CodeSubdiv}" Margin="5,2" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SubdivName}" Margin="5,2" VerticalAlignment="Center">
+                        <TextBlock.ToolTip>
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="Margin" Value="10,2,10,2"/>
+                                    </Style>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="IsReadOnly" Value="True"/>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Тип:"/>
+                                <TextBox Grid.Column="1" Text="{Binding SubdivPartTypeName}"/>
+                                <TextBlock Grid.Row="1" Text="Дата начала"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DateStartSubdivPart, StringFormat={}{0:dd/MM/yyyy}}"/>
+                                <TextBlock Grid.Row="2" Text="Дата окончания"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DateEndSubdivPart, StringFormat={}{0:dd/MM/yyyy}}"/>
+                            </Grid>
+                        </TextBlock.ToolTip>
+                        </TextBlock>
+                </Grid>
+            </HierarchicalDataTemplate>
+            <HierarchicalDataTemplate DataType="{x:Type emodel:SubdivPartition}" ItemsSource="{Binding PartitionChildren}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition SharedSizeGroup="ClSubdiv1"/>
+                        <ColumnDefinition SharedSizeGroup="ClSubdiv2"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding CodeSubdivPartition}" Margin="5,2" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SubdivPartName}" Margin="5,2" VerticalAlignment="Center"/>
+                </Grid>
+            </HierarchicalDataTemplate>
+        </Grid.Resources>
+        <WrapPanel Background="{StaticResource PanelGrayBack}" Orientation="Horizontal">
+            <Button Style="{StaticResource ToolBoxLikeStyle}" Command="cmd:AppManningCommands.AddSubdivPartition">
+                <Image Source="pack://application:,,,/ManningTable;component/Images/new_1616.png" Style="{StaticResource ToolBoxImageStyle}"/>
+            </Button>
+            <Separator/>
+            <Button Style="{StaticResource ToolBoxLikeStyle}" Command="cmd:AppManningCommands.AddSubdivPartition" CommandParameter="{Binding SelectedNode}">
+                <Image Source="pack://application:,,,/ManningTable;component/Images/copydoc_3232.png" Style="{StaticResource ToolBoxImageStyle}"/>
+            </Button>
+            <Separator/>
+            <Button Style="{StaticResource ToolBoxLikeStyle}" Command="cmd:AppManningCommands.EditSubdivPartition">
+                <Image Source="pack://application:,,,/ManningTable;component/Images/edit_1616.png" Style="{StaticResource ToolBoxImageStyle}"/>
+            </Button>
+            <Button Style="{StaticResource ToolBoxLikeStyle}" Command="cmd:AppManningCommands.DeleteSubdivPartition">
+                <Image Source="pack://application:,,,/ManningTable;component/Images/delete_1616.png" Style="{StaticResource ToolBoxImageStyle}"/>
+            </Button>
+        </WrapPanel>
+        <xctk:WatermarkTextBox Grid.Row="1" Text="{Binding FilterSubdiv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Watermark="Введите код или наименование подразделения"
+                                   Style="{StaticResource EnabledTextBox}" Height="26">
+        </xctk:WatermarkTextBox>
+        <TreeView Grid.Row="2" ItemsSource="{Binding SubdivSource}" Margin="0,4,0,0">
+            <interact:Interaction.Behaviors>
+                <hlp:BindableSelectedItemBehavior  SelectedItem="{Binding SelectedNode, Mode=TwoWay}" />
+            </interact:Interaction.Behaviors>
+            <TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="cmd:AppManningCommands.AddSubdivPartition" Header="Добавить дочернюю подструктуру" CommandParameter="{Binding SelectedNode}">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/ManningTable;component/Images/copydoc_3232.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Command="cmd:AppManningCommands.AddSubdivPartition" Header="Добавить структуру">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/ManningTable;component/Images/new_1616.png" Width="18"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="cmd:AppManningCommands.EditSubdivPartition" Header="Редактировать подструктуру">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/ManningTable;component/Images/edit_1616.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="cmd:AppManningCommands.DeleteSubdivPartition" Header="Удалить подструктуру">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/ManningTable;component/Images/delete_1616.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </TreeView.ContextMenu>
+        </TreeView>
+    </Grid>
+</UserControl>

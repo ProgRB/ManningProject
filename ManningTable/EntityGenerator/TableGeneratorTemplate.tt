@@ -1,0 +1,122 @@
+﻿<#@ template hostspecific="true" language="C#"#>
+<#@ output extension=".cs"#>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data.Linq" #>
+<#@ import namespace="System.IO"#>
+<#@ import namespace="System.Xml"#>
+<#@ import namespace="System.Text"#>
+<#@ import namespace="System.Linq"#>
+<#@ import namespace="System.Data.Linq.Mapping"#>
+<#
+    string file_name= this.Host.ResolvePath("DbXmlData.xml");
+#>
+/***********************************************************/
+/**********   Generated at <#=DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")#>     ********/
+/*********************************************************/
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Data;
+using Oracle.DataAccess.Client;
+using System.Data.Linq.Mapping;
+
+namespace EntityGenerator
+{
+    <# 
+    XmlDocument doc= new XmlDocument();
+    doc.Load(file_name);
+    XmlNodeList nodes =  doc.DocumentElement.SelectNodes("/Tables/Table");
+	// соберем все таблицы 
+    foreach (XmlNode n in nodes)
+    {
+        ClearIndent();
+        PushIndent("    ");
+        PushComment(n);
+        WriteLine("");
+        string schName=string.Format("SchemaName(\"{0}\")", n.Attributes["SchemaName"]==null? "":n.Attributes["SchemaName"].InnerText);
+        WriteLine(string.Format("[{0}, {1}]", string.Format("Table(Name=\"{0}\")", n.Attributes["Name"].InnerText), schName));
+#>
+public partial class <#=GetFormattedName(n.Attributes["Name"].InnerText)#> : RowEntityBase
+{
+<#        PushIndent("    ");#>#region Class Members
+<# 
+    foreach (XmlNode inner in n.ChildNodes)
+    { 
+        if (inner.Name=="Column")
+        {#>
+<# PushComment(inner);#>
+<#PushAttributtes(inner); #>
+
+public <#= GetColumnType(inner)#> <#= GetFormattedName(inner.Attributes["Name"].InnerText)#> 
+{
+    get
+    {
+        return this.GetDataRowField<<#= GetColumnType(inner)#>>(() => <#= GetFormattedName(inner.Attributes["Name"].InnerText) #>);
+    }
+    set
+    {
+        UpdateDataRow<<#= GetColumnType(inner)#>>(() => <#= GetFormattedName(inner.Attributes["Name"].InnerText) #>, value);
+    }
+}
+<#
+            }
+        }                                           
+#>
+        #endregion
+
+		#region Ссылка на классы по другим данным
+
+		#endregion
+<#        ClearIndent();#>
+    }
+<#
+    ClearIndent();
+        WriteLine("");
+}
+    #>
+}
+<#+
+string GetFormattedName(string name)
+{
+        if (string.IsNullOrEmpty(name)) 
+            Error("Не задано имя, ошибка");
+        string[] s = name.Split(new char[]{'_'}, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(string.Empty, s.Select(r=>(r.ToLower()=="id"?"ID":FirstCapChar(r))).ToArray());
+        return "dafds";
+}#>
+<#+
+string GetColumnType(XmlNode n){
+        Type type = Type.GetType(n.Attributes["Type"].InnerText);
+        if (!type.IsValueType || Nullable.GetUnderlyingType(type) != null) return type.Name;
+        return type.Name+"?";
+}#>
+<#+ void PushAttributtes(XmlNode n)
+    {
+        Write(string.Format("[Column({0})]",
+                string.Join(", ", new string[]{
+                string.Format("Name=\"{0}\"", n.Attributes["Name"].InnerText), 
+                (n.Attributes["Nullable"]==null || n.Attributes["Nullable"].InnerText.ToUpper()=="TRUE"? "":"CanBeNull=false"),
+                (n.Attributes["IsPrimaryKey"]==null ||n.Attributes["IsPrimaryKey"].InnerText.ToUpper()=="FALSE"? "":"IsPrimaryKey=true")}.Where(r=>!string.IsNullOrEmpty(r))))
+            );
+    }
+ #>
+<#+
+string FirstCapChar(string s)
+    {
+  if (string.IsNullOrEmpty(s))
+    return string.Empty;
+  else
+    return s.Substring(0,1).ToUpper()+s.Substring(1).ToLower();
+}#>
+<#+
+    void PushComment(XmlNode n)
+    {
+        if (n.Attributes["Comment"]!=null)
+        {
+            WriteLine("/// <summary>");
+			WriteLine("/// "+n.Attributes["Comment"].InnerText);
+			WriteLine("/// </summary>");
+        }
+    }
+#>

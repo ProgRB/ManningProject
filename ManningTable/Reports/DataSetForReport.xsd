@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="RepTable" msprop:Generator_TableClassName="RepTableDataTable" msprop:Generator_TableVarName="tableRepTable" msprop:Generator_TablePropName="RepTable" msprop:Generator_RowDeletingName="RepTableRowDeleting" msprop:Generator_RowChangingName="RepTableRowChanging" msprop:Generator_RowEvHandlerName="RepTableRowChangeEventHandler" msprop:Generator_RowDeletedName="RepTableRowDeleted" msprop:Generator_UserTableName="RepTable" msprop:Generator_RowChangedName="RepTableRowChanged" msprop:Generator_RowEvArgName="RepTableRowChangeEvent" msprop:Generator_RowClassName="RepTableRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EMP_LAST_NAME" msprop:Generator_ColumnVarNameInTable="columnEMP_LAST_NAME" msprop:Generator_ColumnPropNameInRow="EMP_LAST_NAME" msprop:Generator_ColumnPropNameInTable="EMP_LAST_NAMEColumn" msprop:Generator_UserColumnName="EMP_LAST_NAME" type="xs:string" minOccurs="0" />
+              <xs:element name="EMP_FIRST_NAME" msprop:Generator_ColumnVarNameInTable="columnEMP_FIRST_NAME" msprop:Generator_ColumnPropNameInRow="EMP_FIRST_NAME" msprop:Generator_ColumnPropNameInTable="EMP_FIRST_NAMEColumn" msprop:Generator_UserColumnName="EMP_FIRST_NAME" type="xs:string" minOccurs="0" />
+              <xs:element name="EMP_MIDDLE_NAME" msprop:Generator_ColumnVarNameInTable="columnEMP_MIDDLE_NAME" msprop:Generator_ColumnPropNameInRow="EMP_MIDDLE_NAME" msprop:Generator_ColumnPropNameInTable="EMP_MIDDLE_NAMEColumn" msprop:Generator_UserColumnName="EMP_MIDDLE_NAME" type="xs:string" minOccurs="0" />
+              <xs:element name="PER_NUM" msprop:Generator_ColumnVarNameInTable="columnPER_NUM" msprop:Generator_ColumnPropNameInRow="PER_NUM" msprop:Generator_ColumnPropNameInTable="PER_NUMColumn" msprop:Generator_UserColumnName="PER_NUM" type="xs:string" minOccurs="0" />
+              <xs:element name="CODE_SUBDIV" msprop:Generator_ColumnVarNameInTable="columnCODE_SUBDIV" msprop:Generator_ColumnPropNameInRow="CODE_SUBDIV" msprop:Generator_ColumnPropNameInTable="CODE_SUBDIVColumn" msprop:Generator_UserColumnName="CODE_SUBDIV" type="xs:string" minOccurs="0" />
+              <xs:element name="CODE_TARIF_GRID" msprop:Generator_ColumnVarNameInTable="columnCODE_TARIF_GRID" msprop:Generator_ColumnPropNameInRow="CODE_TARIF_GRID" msprop:Generator_ColumnPropNameInTable="CODE_TARIF_GRIDColumn" msprop:Generator_UserColumnName="CODE_TARIF_GRID" type="xs:string" minOccurs="0" />
+              <xs:element name="CLASSIFIC" msprop:Generator_ColumnVarNameInTable="columnCLASSIFIC" msprop:Generator_ColumnPropNameInRow="CLASSIFIC" msprop:Generator_ColumnPropNameInTable="CLASSIFICColumn" msprop:Generator_UserColumnName="CLASSIFIC" type="xs:string" minOccurs="0" />
+              <xs:element name="DataColumn1" msprop:Generator_ColumnVarNameInTable="columnDataColumn1" msprop:Generator_ColumnPropNameInRow="DataColumn1" msprop:Generator_ColumnPropNameInTable="DataColumn1Column" msprop:Generator_UserColumnName="DataColumn1" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

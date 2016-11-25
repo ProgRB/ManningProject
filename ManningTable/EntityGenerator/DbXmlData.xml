@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Tables>
+  <Table Name="SUBDIV_PART_TYPE" SchemaName="APSTAFF" Comments="Таблица типов подструктур подразделений">
+    <Column Name="SUBDIV_PART_TYPE_ID" Comment="Уникальный год номер типа подструктуры" DBType="NUMBER" Nullable="False" Type="System.Decimal"/>
+    <Column Name="SUBDIV_PART_TYPE_CODE" Comment="Код типа подструктуры" DBType="VARCHAR2" Type="System.String"/>
+    <Column Name="SUBDIV_PART_TYPE_NAME" Comment="Наименование типа подструктуры" DBType="VARCHAR2" Type="System.String"/>
+  </Table>
+
+  <Table Name="SUBDIV_PARTITION" SchemaName="APSTAFF">
+    <Column Name="SUBDIV_PARTITION_ID" Comment="Уникальный номер подструктуры" DBType="NUMBER"  Type="System.Decimal"/>
+    <Column Name="SUBDIV_PART_TYPE_ID" Comment="Ссылка на уникальный тип структуры подразделения" DBType="NUMBER" Nullable="False" Type="System.Decimal"/>
+    <Column Name="SUBDIV_NUMBER" Comment="Номер подструктуры" DBType="VARCHAR2" Nullable="False" Type="System.String"/>
+    <Column Name="PARENT_SUBDIV_ID" Comment="Ссылка на родительский элемент структуры" DBType="NUMBER" ColumnRef="APSTAFF.SUBDIV_PARTITION.SUBDIV_PARTITION_ID" Type="System.Decimal"/>
+    <Column Name="SUBDIV_ID" Comment="Подразделение которому принадлежит струкутра" DBType="NUMBER" Nullable="False" ColumnRef="APSTAFF.SUBDIV.SUBDIV_ID" Type="System.Decimal"/>
+    <Column Name="DATE_START_SUBDIV_PART" Comment="Дата начала действия структуры" DBType="DATE" Nullable="False" Type="System.DateTime"/>
+    <Column Name="DATE_END_SUBDIV_PART" Comment="Дата окончания действия структуры" DBType="DATE" Type="System.DateTime"/>
+    <Column Name="SUBDIV_PART_NAME" Comment="Наименование структурного подразделения" DBType="VARCHAR2" Type="System.String" Nullable="False"/>
+  </Table>
+
+  <Table Name="INDIVID_PROTECTION" SchemaName="APSTAFF">
+    <Column Name="INDIVID_PROTECTION_ID" DBType="NUMBER" Nullable="False" Type="System.Decimal"/>
+    <Column Name="CODE_PROTECTION" DBType="VARCHAR2" Nullable="False" Type="System.String"/>
+    <Column Name="NAME_PROTECTION" DBType="VARCHAR2" Type="System.String"/>
+    <Column Name="TYPE_INDIVID_PROTECTION_ID" DBType="NUMBER" Nullable="False" ColumnRef="APSTAFF.TYPE_INDIVID_PROTECTION.TYPE_INDIVID_PROTECTION_ID" Type="System.Decimal"/>
+  </Table>
+  
+  <Table Name="TYPE_INDIVID_PROTECTION" SchemaName="APSTAFF">
+    <Column Name="TYPE_INDIVID_PROTECTION_ID" DBType="NUMBER" Nullable="False" Type="System.Decimal"/>
+    <Column Name="TYPE_PROTECTION_NAME" DBType="VARCHAR2" Nullable="False" Type="System.String"/>
+  </Table>
+</Tables>

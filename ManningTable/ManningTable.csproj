@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FD9833A2-805F-489F-B3DA-B664734C50A2}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ManningTable</RootNamespace>
+    <AssemblyName>ManningTable</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\TestAppWPF\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="LibraryKadr, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Kadr\Kadr\Kadr\bin\Debug\LibraryKadr.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.4.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="SalaryEFLibrary">
+      <HintPath>..\..\ASalary\AddRetention\bin\Release\SalaryEFLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EntityGenerator\PartialEntities.cs" />
+    <Compile Include="EntityGenerator\TableGeneratorTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableGeneratorTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ConnectionHelper.cs" />
+    <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\DelegateCommand.cs" />
+    <Compile Include="Helpers\ExceptionHelper.cs" />
+    <Compile Include="Helpers\MailBagHelper.cs" />
+    <Compile Include="Helpers\NotificationObject.cs" />
+    <Compile Include="Helpers\OracleAdapterHelper.cs" />
+    <Compile Include="Helpers\OracleCommandHelper.cs" />
+    <Compile Include="Helpers\RoleHelper.cs" />
+    <Compile Include="Helpers\TreeViewHelper.cs" />
+    <Compile Include="Model\BaseTariffGroup.cs" />
+    <Compile Include="Model\Staff.cs" />
+    <Compile Include="Model\StaffGroup.cs" />
+    <Compile Include="Model\StaffSection.cs" />
+    <Compile Include="Model\STAFF_SECTION.cs" />
+    <Compile Include="Reports\DataSetForReport.cs">
+      <DependentUpon>DataSetForReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DataSetForReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetForReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AppCommands.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="Helpers\CustomAttributes.cs" />
+    <Compile Include="ViewModel\ManningEditorViewModel.cs" />
+    <Compile Include="ViewModel\StaffFilterProvider.cs" />
+    <Compile Include="ViewModel\StaffSectionList.cs" />
+    <Compile Include="View\IndividProtectionEditor.xaml.cs">
+      <DependentUpon>IndividProtectionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StaffSectionEditor.xaml.cs">
+      <DependentUpon>StaffSectionEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StaffSectionViewer.xaml.cs">
+      <DependentUpon>StaffSectionViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubdivPartEditor.xaml.cs">
+      <DependentUpon>SubdivPartEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubdivPartitionView.xaml.cs">
+      <DependentUpon>SubdivPartitionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubdivPartTypeEditor.xaml.cs">
+      <DependentUpon>SubdivPartTypeEditor.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AppResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IndividProtectionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManningTableViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Helpers\AppDataset.cs" />
+    <Compile Include="Helpers\ManningLibrary.cs" />
+    <Compile Include="View\ManningTableViewer.xaml.cs">
+      <DependentUpon>ManningTableViewer.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\StaffSectionEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StaffSectionViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubdivPartEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubdivPartitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubdivPartTypeEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="EntityGenerator\TableGeneratorTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TableGeneratorTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\DataSources\EntityGenerator.AccountData.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.AddressNoneKladr.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.BankForTypeAccount.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Brigage.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Cartulary.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.ClientAccount.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.ClientRetentRelation.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.DataEntityBase.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.DataRowExtension.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.DocList.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.EmpAccountData.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.EmpAddress.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.EmpAllData.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.EntityExtensionConverter.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Loan.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Passport.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.PaymentType.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.PerData.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.PieceWorkData.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.RegDoc.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.ReportGroup.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Retention.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.RowEntityBase.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Salary.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryAddCorrelation.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryAdvance.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryDocum.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryDocumDetail.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryDocumPayChange.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryDocumPeriod.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalaryHistory.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SalSubdivReceive.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SchemaNameAttribute.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Subdiv.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SubdivForClose.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SubdivPartition.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.SubdivPartType.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TableBrigage.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TableBrigageModel.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TaxCompany.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TaxDocumDiscount.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TaxDocumPayment.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TaxEmpDocum.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.Transfer.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TypeAccount.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TypeBank.datasource" />
+    <None Include="Properties\DataSources\EntityGenerator.TypeSalDocum.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Reports\DataSetForReport.xsc">
+      <DependentUpon>DataSetForReport.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DataSetForReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetForReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\DataSetForReport.xss">
+      <DependentUpon>DataSetForReport.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\calendar_delete_3232.png" />
+    <Resource Include="Images\save_3232.png" />
+    <Resource Include="Images\split_3232.png" />
+    <Resource Include="Images\vertical_3232.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\application_error_3232.png" />
+    <Resource Include="Images\calc_3232.png" />
+    <Resource Include="Images\check_3232.png" />
+    <Resource Include="Images\coins_3232.png" />
+    <Resource Include="Images\coins_delete_3232.png" />
+    <Resource Include="Images\credit_card_4848.png" />
+    <Resource Include="Images\daw_Large.ico" />
+    <Resource Include="Images\decrease_1616.png" />
+    <Resource Include="Images\delete_1616.png" />
+    <Resource Include="Images\designer_128128.ico" />
+    <Resource Include="Images\details_2424.png" />
+    <Resource Include="Images\dialog-close1616.png" />
+    <Resource Include="Images\document-close-4.ico" />
+    <Resource Include="Images\document-edit.ico" />
+    <Resource Include="Images\document-edit.jpg" />
+    <Resource Include="Images\document-new-611.ico" />
+    <Resource Include="Images\document_3232.png" />
+    <Resource Include="Images\download_1616.png" />
+    <Resource Include="Images\down_2424.png" />
+    <Resource Include="Images\EditingGroupSmall.png" />
+    <Resource Include="Images\edit_1616.png" />
+    <Resource Include="Images\exclamation_3232.png" />
+    <Resource Include="Images\filter_3232.png" />
+    <Resource Include="Images\filter_add.png" />
+    <Resource Include="Images\filter_delete.png" />
+    <Resource Include="Images\gerb.png" />
+    <Resource Include="Images\info2_3232.png" />
+    <Resource Include="Images\info_3232.png" />
+    <Resource Include="Images\LargeIcon.png" />
+    <Resource Include="Images\left_2424.png" />
+    <Resource Include="Images\locked_3232.png" />
+    <Resource Include="Images\mail_3232.png" />
+    <Resource Include="Images\map_create_2424.png" />
+    <Resource Include="Images\money_dollar_3232.ico" />
+    <Resource Include="Images\new_1616.png" />
+    <Resource Include="Images\Nodaw.ico" />
+    <Resource Include="Images\print2424.png" />
+    <Resource Include="Images\refresh2424.png" />
+    <Resource Include="Images\report_3232.png" />
+    <Resource Include="Images\right_2424.png" />
+    <Resource Include="Images\salary_3232.ico" />
+    <Resource Include="Images\sallary_3232.png" />
+    <Resource Include="Images\SaveAsSmall.ico" />
+    <Resource Include="Images\save_2222.png" />
+    <Resource Include="Images\setting_3232.png" />
+    <Resource Include="Images\SmallIcon.png" />
+    <Resource Include="Images\table-edit.jpg" />
+    <Resource Include="Images\undo_2424.png" />
+    <Resource Include="Images\unlocked_3232.png" />
+    <Resource Include="Images\up_2424.png" />
+    <Resource Include="Images\user_3232.png" />
+    <Resource Include="Images\window-close1616.png" />
+    <Resource Include="Images\zoomin2424.png" />
+    <Resource Include="Images\zoomout2424.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\save_1616.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="EntityGenerator\DbXmlData.xml">
+      <SubType>Designer</SubType>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\copydoc_3232.png" />
+    <Content Include="Queries\MT\SelectIndividProtectionData.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Queries\MT\SelectSubdivPartitionData.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Queries\MT\SelectSubdivPartitionView.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

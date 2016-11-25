@@ -1,0 +1,61 @@
+﻿<Window x:Class="ManningTable.View.StaffSectionEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cmd="clr-namespace:ManningTable.ViewModel"
+        Title="Редактор раздела" Height="158" Width="450" ShowInTaskbar="False" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ManningTable;component/AppResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="cmd:AppManningCommands.SaveStaffSection" CanExecute="Save_canExecute" Executed="Save_Executed"/>
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110*" />
+            <ColumnDefinition Width="236*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="10,10"/>
+            </Style>
+            <Style BasedOn="{StaticResource EnabledTextBox}" TargetType="TextBox">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,10,5,10"/>
+            </Style>
+            <Style BasedOn="{StaticResource EnabledTextBox}" TargetType="ComboBox">
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="Margin" Value="0,10, 5,10"/>
+            </Style>
+        </Grid.Resources>
+        <TextBlock Text="Наименование"/>
+        <TextBox Grid.Column="1" Text="{Binding NAME_SECTION}"/>
+        <TextBlock Grid.Row="1" Text="Родительская секция"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" SelectedValue="{Binding PARENT_SECTION_ID, UpdateSourceTrigger=PropertyChanged}" x:Name="cbStaffParent"
+                  SelectedValuePath="StaffSectionID" IsEditable="True">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding NameSection}" Padding="{Binding PaddingLevel}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" DockPanel.Dock="Bottom" Orientation="Horizontal" Background="{StaticResource LightBrush}">
+            <Button Command="cmd:AppManningCommands.SaveStaffSection" ToolTip="Сохранить раздел" Content="Сохранить" Margin="5,2" Padding="5,0" IsDefault="True" />
+            <Button Content="Закрыть" VerticalAlignment="Center" Padding="5,0" Click="Button_Click" IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>

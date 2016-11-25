@@ -1,0 +1,366 @@
+<StatusBar DockPanel.Dock="Bottom">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="57"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{Binding ElementName=clCodePos, Path=ActualWidth, Converter={StaticResource MinusConverter}, ConverterParameter=0}" />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{Binding ElementName=clPosName, Path=ActualWidth , Converter={StaticResource MinusConverter}, ConverterParameter=0}"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{Binding ElementName=clClassific, Path=ActualWidth, Converter={StaticResource MinusConverter}, ConverterParameter=0}"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{Binding ElementName=clTarBySchema, Path=ActualWidth, Converter={StaticResource MinusConverter}, ConverterParameter=0}"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{Binding ElementName=clTarSum, Path=ActualWidth, Converter={StaticResource MinusConverter}, ConverterParameter=0}"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{Binding ElementName=clTariffGrid, Path=ActualWidth, Converter={StaticResource MinusConverter}, ConverterParameter=0}"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem HorizontalContentAlignment="Right">
+                    <Label Content="{Binding SumCountStaff}" FontWeight="bold"/>
+                </StatusBarItem>
+                <Separator Grid.Column="1"/>
+                <Separator Grid.Column="3"/>
+                <Separator Grid.Column="5"/>
+                <StatusBarItem Grid.Column="6" HorizontalContentAlignment="Right">
+                    <Label Content="{Binding AvgClassificStaff}" FontWeight="Bold"/>
+                </StatusBarItem>
+                <Separator Grid.Column="7"/>
+                <StatusBarItem Grid.Column="8" HorizontalContentAlignment="Right">
+                    <Label Content="{Binding AvgTarBySchemaStaff}" FontWeight="Bold"/>
+                </StatusBarItem>
+                <Separator Grid.Column="9"/>
+                <Separator Grid.Column="11"/>
+                <StatusBarItem Grid.Row="1" Grid.ColumnSpan="20" HorizontalAlignment="Center">
+                    <Label Content="Итоги" HorizontalAlignment="Center" FontWeight="Bold"/>
+                </StatusBarItem>
+            </StatusBar>
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ElementName=_this, Path=StaffSource}" AlternatingRowBackground="#FFEBE8E8" AlternationCount="2" 
+                      CanUserAddRows="False" RowDetailsTemplate="{StaticResource StaffDetailsTemplate}" CanUserReorderColumns="False" x:Name="dgStaffs" CurrentCellChanged="dgStaffs_CurrentCellChanged"
+                      RowDetailsVisibilityMode="{Binding ElementName=cbCanViewGroupDetails, Path=IsChecked, Converter={StaticResource BoolToGridDetVisConveter}}"
+                      CellEditEnding="dgStaffs_CellEditEnding">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="70" x:Name="clStaffCount">
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Кол-во единиц" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding CountRows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue={x:Static sys:String.Empty}}"
+                                           FocusManager.FocusedElement="{Binding RelativeSource= {RelativeSource Self}}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <Trigger Property="Validation.HasError" Value="True">
+                                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding CountRows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, TargetNullValue={x:Static sys:String.Empty}}"
+                                         TextAlignment="Center" VerticalContentAlignment="Center" FocusManager.FocusedElement="{Binding RelativeSource= {RelativeSource Self}}">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <Trigger Property="Validation.HasError" Value="True">
+                                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </DataTemplate>
+
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn  Width="75" x:Name="clCodePos">
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Шифр должности" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="10,3" Text="{Binding PosID, Mode=OneWay, Converter={StaticResource IDToNameConverter}, ConverterParameter=POSITION\,CODE_POS, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}"
+                                           Validation.ErrorTemplate="{StaticResource MyErrorTemplate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding PosID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="POS_ID" DisplayMemberPath="CODE_POS"
+                                          ItemsSource="{Binding Source={StaticResource PositionSource4}}" IsEditable="True" IsSynchronizedWithCurrentItem="False">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="250" x:Name="clPosName">
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Должность" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="10,3" Text="{Binding PosID, Mode=OneWay, Converter={StaticResource IDToNameConverter}, ConverterParameter=POSITION\,POS_NAME, ValidatesOnDataErrors=True}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding PosID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="POS_ID" DisplayMemberPath="POS_NAME"
+                                          ItemsSource="{Binding Source={StaticResource PositionSource5}}" IsEditable="True" IsSynchronizedWithCurrentItem="False">
+                                    <ComboBox.Resources>
+                                        <Style TargetType="Popup">
+                                            <Setter Property="Width" Value="300"/>
+                                        </Style>
+                                    </ComboBox.Resources>
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Разряд" Binding="{Binding Classific, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static sys:String.Empty}, ValidatesOnDataErrors=True}"
+                                        x:Name="clClassific"></DataGridTextColumn>
+                    <DataGridTemplateColumn Width="70" x:Name="clTarBySchema">
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Тариф. коэф. по схеме" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Stretch" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding TarBySchema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=F2, ValidatesOnDataErrors=True, TargetNullValue={x:Static sys:String.Empty}}"
+                                           FocusManager.FocusedElement="{Binding RelativeSource= {RelativeSource Self}}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <Trigger Property="Validation.HasError" Value="True">
+                                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                            
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding TarBySchema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=F2, ValidatesOnDataErrors=True, TargetNullValue={x:Static sys:String.Empty}}"
+                                         TextAlignment="Center" VerticalContentAlignment="Center" FocusManager.FocusedElement="{Binding RelativeSource= {RelativeSource Self}}">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <Trigger Property="Validation.HasError" Value="True">
+                                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </DataTemplate>
+                            
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Width="180" x:Name="clTarSum">
+                        <DataGridTemplateColumn.Header>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="6,2"  Text="Тариф. ставка" TextWrapping="Wrap" TextAlignment="Center" Background="Transparent"/>
+                                <GridSplitter Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="2">
+                                    <GridSplitter.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFC4C4C4" Offset="0.256" />
+                                            <GradientStop Color="White" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </GridSplitter.Background>
+                                </GridSplitter>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="57"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="6,2"  Text="Коэф-т" TextWrapping="Wrap" TextAlignment="Center" Background="Transparent"/>
+                                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="2" >
+                                        <GridSplitter.Background>
+                                            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                                <GradientStop Color="#FFC1BEBE" Offset="0.564" />
+                                                <GradientStop Color="White" Offset="1" />
+                                            </LinearGradientBrush>
+                                        </GridSplitter.Background>
+                                    </GridSplitter>
+                                    <TextBlock Grid.Column="2" Text="Руб." TextWrapping="Wrap" TextAlignment="Center" Background="Transparent"/>
+                                </Grid>
+                            </Grid>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding PersonalTar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static sys:String.Empty}, ValidatesOnDataErrors=True}"
+                                               TextAlignment="Center" VerticalAlignment="Center" Validation.ErrorTemplate="{StaticResource MyErrorTemplate}"/>
+                                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="0.5" Background="Black"/>
+                                    <Label Grid.Column="2" Content="{Binding TariffSum, Mode=OneWay, StringFormat=F2}" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                                               Padding="0,2,10,2"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="{Binding PersonalTar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, TargetNullValue={x:Static sys:String.Empty}, ValidatesOnDataErrors=True}"
+                                             VerticalContentAlignment="Center" TextAlignment="Center"/>
+                                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="2" Background="Black"/>
+                                    <Label Grid.Column="2" Content="{Binding TariffSum, Mode=OneWay, StringFormat=F2}" Background="#FFECE9D8" VerticalAlignment="Stretch"
+                                               VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Padding="0,2,10,2"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Width="80" x:Name="clTariffGrid">
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Тариф. сетка" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="10,3" Text="{Binding TariffGridID, Mode=OneWay, Converter={StaticResource IDToNameConverter}, ConverterParameter=TARIFF_GRID\,CODE_TARIFF_GRID, ValidatesOnDataErrors=True}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding TariffGridID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="TARIFF_GRID_ID" DisplayMemberPath="CODE_TARIFF_GRID"
+                                          ItemsSource="{Binding Source={StaticResource TariffSource}}" IsEditable="True" IsSynchronizedWithCurrentItem="False">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Width="120" x:Name="clOrder">
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Заказ" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="10,3" Text="{Binding OrderID, Mode=OneWay, Converter={StaticResource IDToNameConverter}, ConverterParameter=ORDER\,ORDER_NAME, ValidatesOnDataErrors=True}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding OrderID, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" SelectedValuePath="ORDER_ID" DisplayMemberPath="ORDER_NAME"
+                                          ItemsSource="{Binding Source={StaticResource OrderSource}}" IsEditable="True" IsSynchronizedWithCurrentItem="False">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Width="100" x:Name="clComments">
+                        <DataGridTemplateColumn.Header>
+                            <TextBlock Text="Примечание" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+               <!-- <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="BorderBrush" Value="LightSteelBlue" />
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="1" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.RowValidationErrorTemplate>
+                    <ControlTemplate>
+                        <Grid Margin="0,-2,0,-2" ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors)[0].ErrorContent}">
+                            <Ellipse StrokeThickness="0" Fill="Red" Width="{TemplateBinding FontSize}" Height="{TemplateBinding FontSize}" />
+                            <TextBlock Margin="0,4,0,0" Text="!" FontSize="{TemplateBinding FontSize}" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"  />
+                        </Grid>
+                    </ControlTemplate>
+                </DataGrid.RowValidationErrorTemplate>-->
+            </DataGrid>
